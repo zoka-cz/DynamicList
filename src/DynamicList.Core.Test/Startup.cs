@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DynamicList.Core.Test.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,14 @@ namespace DynamicList.Core.Test
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
+			services.Add(new ServiceDescriptor(typeof(Models.CompanyHolder), new Models.CompanyHolder(new ViewModels.CompanyModel() {
+				CompanyName = "My Greatest Company", 
+				Employees = new List<EmployeeModel> {
+					new ViewModels.EmployeeModel() { Name = "Fred", Surname = "Oldman", Age = 65 },
+					new ViewModels.EmployeeModel() { Name = "John", Surname = "Newman", Age = 19 },
+					new ViewModels.EmployeeModel() { Name = "Jessica", Surname = "Middlewoman", Age = 37 }
+				}
+			})));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}

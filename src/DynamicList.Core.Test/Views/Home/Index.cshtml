@@ -1,9 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "About";
+	ViewData["Title"] = "Index";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<form method="post">
+	@Html.EditorForModel()
+	<div class="editor-field">
+		<input type="submit" value="Save" class="btn" />
+	</div>
+</form>
 
-<partial name="SomePartial"/>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

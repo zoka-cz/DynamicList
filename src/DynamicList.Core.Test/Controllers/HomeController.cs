@@ -10,9 +10,18 @@ namespace DynamicList.Core.Test.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly Models.CompanyHolder				m_CompanyHolder;
+
+		public HomeController(Models.CompanyHolder _company_holder)
+		{
+			m_CompanyHolder = _company_holder;
+		}
+
 		public IActionResult Index()
 		{
-			return View();
+			var model = m_CompanyHolder.Company;
+
+			return View(model);
 		}
 
 
