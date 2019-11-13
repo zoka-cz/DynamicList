@@ -2,6 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Zoka.AspNetCore.Components.DynamicList</AssemblyName>
+    <RootNamespace>Zoka.AspNetCore.Components.DynamicList</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DocumentationFile>bin\XMLDoc\Zoka.AspNetCore.Components.DynamicList.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DocumentationFile>bin\XMLDoc\Zoka.AspNetCore.Components.DynamicList.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
