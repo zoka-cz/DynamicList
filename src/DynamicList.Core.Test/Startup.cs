@@ -40,7 +40,10 @@ namespace DynamicList.Core.Test
 				}
 			})));
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services
+				.AddMvc()
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+				.AddMvcOptions(o => o.ModelMetadataDetailsProviders.Add(new Zoka.AspNetCore.Components.DynamicList.DynamicListAttribute()));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
