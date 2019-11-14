@@ -1,0 +1,50 @@
+﻿@model Object
+
+@{
+	var i = 0;
+}
+
+@foreach (var prop in ViewData.ModelExplorer.Properties.Where(me => !ViewData.TemplateInfo.Visited(me)))
+{
+	if (prop.Metadata.HideSurroundingHtml)
+	{
+		@Html.Editor(prop.Metadata.PropertyName);
+	}
+	else
+	{
+		if (prop.Metadata.IsComplexType)
+		{
+			<div class="clearfix"></div>
+			<div class="form-group">
+				<div class="col-lg-12">
+					@Html.Label(prop.Metadata.PropertyName)
+				</div>
+				@Html.Editor(prop.Metadata.PropertyName, new { htmlAttributes = new { @class = "form-control" } }) @* hack for passig htmlAttributes retaken from: https://cpratt.co/html-editorfor-and-htmlattributes/ *@
+				@Html.ValidationMessage(prop.Metadata.PropertyName)
+			</div>
+			i = 0;
+		}
+		else
+		{
+			<div class="form-group col-lg-4 col-md-6 col-sm-12">
+				@Html.Label(prop.Metadata.PropertyName)
+				@Html.Editor(prop.Metadata.PropertyName, new { htmlAttributes = new { @class = "form-control" } }) @* hack for passing htmlAttributes into default templates retaken from: https://cpratt.co/html-editorfor-and-htmlattributes/ *@
+				@Html.ValidationMessage(prop.Metadata.PropertyName)
+			</div>
+
+			i++;
+			@* in case we are on large screen, we clearfix after every third component *@
+			if (i % 3 == 0)
+			{
+				<div class="clearfix visible-lg"></div>
+			}
+			@* in case we are on middle screen, we clearfix after every second component *@
+			if (i % 2 == 0)
+			{
+				<div class="clearfix visible-md"></div>
+			}
+		}
+	}
+}
+
+<div class="clearfix"></div>
