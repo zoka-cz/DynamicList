@@ -34,9 +34,9 @@ namespace DynamicList.Core.Test
 			services.Add(new ServiceDescriptor(typeof(Models.CompanyHolder), new Models.CompanyHolder(new ViewModels.CompanyModel() {
 				CompanyName = "My Greatest Company", 
 				Employees = new List<EmployeeModel> {
-					new ViewModels.EmployeeModel() { Name = "Fred", Surname = "Oldman", Age = 65 },
-					new ViewModels.EmployeeModel() { Name = "John", Surname = "Newman", Age = 19 },
-					new ViewModels.EmployeeModel() { Name = "Jessica", Surname = "Middlewoman", Age = 37 }
+					new ViewModels.EmployeeModel() { Id = 1, Name = "Fred", Surname = "Oldman", Age = 65 },
+					new ViewModels.EmployeeModel() { Id = 2, Name = "John", Surname = "Newman", Age = 19 },
+					new ViewModels.EmployeeModel() { Id = 103, Name = "Jessica", Surname = "Middlewoman", Age = 37 }
 				}
 			})));
 

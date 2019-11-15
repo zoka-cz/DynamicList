@@ -1,3 +1,11 @@
 ﻿@model System.Collections.IList
 
-Dynamic list template for property with name &quot;@Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(""))&quot;
+
+@{
+	int i = 0;
+}
+
+@foreach (var item in Model)
+{
+	@Html.EditorFor(m => item, null, $"[{i++}]")
+}
