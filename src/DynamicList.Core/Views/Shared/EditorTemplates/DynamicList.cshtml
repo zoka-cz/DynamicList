@@ -1,11 +1,45 @@
 ﻿@model System.Collections.IList
 
+@inject Microsoft.AspNetCore.Mvc.ViewEngines.ICompositeViewEngine ViewEngine
 
 @{
 	int i = 0;
+	string item_row_partial, add_item_partial;
+
+	if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DynamicListItemTemplatePartial") &&
+		ViewEngine.FindView(ViewContext, (string)ViewData.ModelMetadata.AdditionalValues["DynamicListItemTemplatePartial"], false).Success)
+	{
+		item_row_partial = (string)ViewData.ModelMetadata.AdditionalValues["DynamicListItemTemplatePartial"];
+	}
+	else
+	{
+		item_row_partial = "_DynamicListDefaultRowPartial";
+	}
+
+	if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DynamicListAddItemTemplatePartial") &&
+		ViewEngine.FindView(ViewContext, (string)ViewData.ModelMetadata.AdditionalValues["DynamicListAddItemTemplatePartial"], false).Success)
+	{
+		add_item_partial = (string)ViewData.ModelMetadata.AdditionalValues["DynamicListAddItemTemplatePartial"];
+	}
+	else
+	{
+		add_item_partial = "_DynamicListDefaultAddRowPartial";
+	}
+
 }
 
 @foreach (var item in Model)
 {
-	@Html.EditorFor(m => item, null, $"[{i++}]")
+	<div class="DynamicList-Row">
+		@Html.Partial(
+			item_row_partial, 
+			item, 
+			new ViewDataDictionary(ViewData.ModelMetadata, ViewData.ModelState) {
+				{ "HtmlFieldPrefix", $"{ViewData.TemplateInfo.HtmlFieldPrefix}[{i++}]" }
+			}
+		)
+		@*@Html.EditorFor(m => item, null, $"[{i++}]")*@
+	</div>
 }
+
+@Html.Partial(add_item_partial)
