@@ -1,11 +1,15 @@
 ﻿@model object
 
-<div class="DynamicList-RemoveItemButtonWrapper">
-	<button type="button" class="DynamicList-RemoveItemButton">
-		<span>X</span>
-	</button>
-</div>
+<div class="DynamicList-Row">
+	<div class="DynamicList-RemoveItemButtonWrapper">
+		<button type="button" class="DynamicList-RemoveItemButton">
+			<span>X</span>
+		</button>
+	</div>
 
-<div class="DynamicList-ItemEditorWrapper">
-	@Html.EditorForModel(null, (string)ViewData["HtmlFieldPrefix"])
+	<div class="DynamicList-ItemEditorWrapper">
+		@Html.EditorForModel(null, (string)$"{ViewData["HtmlFieldPrefix"]}[{ViewData["ItemIndex"]}]")
+	</div>
+
+	<input type="hidden" name="@(ViewData["HtmlFieldPrefix"] + (string.IsNullOrEmpty((string)ViewData["HtmlFieldPrefix"]) ? "" : ".") + "Index")" value="@ViewData["ItemIndex"]" />
 </div>

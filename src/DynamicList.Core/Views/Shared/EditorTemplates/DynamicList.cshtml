@@ -1,8 +1,17 @@
 ﻿@model System.Collections.IList
+@addTagHelper *, Zoka.AspNetCore.Components.DynamicList
+
 
 @inject Microsoft.AspNetCore.Mvc.ViewEngines.ICompositeViewEngine ViewEngine
 
 @{
+	var model_type = ViewData.ModelMetadata.ModelType;
+	if (model_type.Name != "List`1" && model_type.Namespace != "System.Collections.Generic")
+	{
+		throw new NotSupportedException("Model must be of List<T> type");
+	}
+	var item_type = model_type.GenericTypeArguments[0];
+
 	int i = 0;
 	string item_row_partial, add_item_partial;
 
@@ -26,20 +35,30 @@
 		add_item_partial = "_DynamicListDefaultAddRowPartial";
 	}
 
+	var html_id = "DynamicList_" + Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(""));
 }
 
-@foreach (var item in Model)
-{
-	<div class="DynamicList-Row">
-		@Html.Partial(
-			item_row_partial, 
-			item, 
-			new ViewDataDictionary(ViewData.ModelMetadata, ViewData.ModelState) {
-				{ "HtmlFieldPrefix", $"{ViewData.TemplateInfo.HtmlFieldPrefix}[{i++}]" }
-			}
-		)
-		@*@Html.EditorFor(m => item, null, $"[{i++}]")*@
+<div class="DynamicList" id="@html_id">
+
+	<div class="DynamicList-Rows">
+		@foreach (var item in Model)
+		{
+			@Html.Partial(
+				item_row_partial,
+				item,
+				new ViewDataDictionary(ViewData.ModelMetadata, ViewData.ModelState) {
+					{ "ItemIndex", i++ },
+					{ "HtmlFieldPrefix", $"{ViewData.TemplateInfo.HtmlFieldPrefix}" }
+				}
+			)
+		}
 	</div>
-}
+	@Html.Partial(add_item_partial)
 
-@Html.Partial(add_item_partial)
+</div>
+
+<template-scripts key-name="DynamicListScripts">
+	<script>
+		$("#@html_id").DynamicList("@item_type.AssemblyQualifiedName", "@ViewData.TemplateInfo.GetFullHtmlFieldName("")", {});
+	</script>
+</template-scripts>

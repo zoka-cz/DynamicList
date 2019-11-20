@@ -63,6 +63,14 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+	
+	<script src="~/lib/DynamicList/DynamicList.js" asp-append-version="true"></script>
+
+	<script>
+		$.DynamicList.Defaults.OnBeforeItemDelete = function () {
+			return confirm("From layout settings: Are you sure to delete item?");
+		}
+	</script>
 
     @RenderSection("Scripts", required: false)
 </body>

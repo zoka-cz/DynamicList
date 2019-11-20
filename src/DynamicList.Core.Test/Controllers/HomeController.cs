@@ -51,8 +51,6 @@ namespace DynamicList.Core.Test.Controllers
 			// perform changes
 			// change company name
 			m_CompanyHolder.Company.CompanyName = model.CompanyName;
-			// add newly added
-			m_CompanyHolder.Company.Employees.AddRange(added);
 			// delete deleted
 			foreach (var emp_to_del in deleted)
 			{
@@ -64,6 +62,12 @@ namespace DynamicList.Core.Test.Controllers
 				var idx = m_CompanyHolder.Company.Employees.FindIndex(e => e.Id == emp_to_update.Id);
 				if (idx != -1)
 					m_CompanyHolder.Company.Employees[idx] = emp_to_update;
+			}
+			// add newly added
+			foreach (var new_emp in added)
+			{
+				new_emp.Id = m_CompanyHolder.Company.Employees.Max(e => e.Id) + 1;
+				m_CompanyHolder.Company.Employees.Add(new_emp);
 			}
 
 			return RedirectToAction("Index");
