@@ -10,10 +10,10 @@ using Microsoft.Extensions.Options;
 namespace Zoka.AspNetCore.Components.DynamicList
 {
 	/// <summary></summary>
-	public class UIConfigureOptions : IPostConfigureOptions<StaticFileOptions>
+	public class DynamicListScriptsFromResourceConfigureOptions : IPostConfigureOptions<StaticFileOptions>
 	{
 		/// <summary></summary>
-		public UIConfigureOptions(IHostingEnvironment environment)
+		public DynamicListScriptsFromResourceConfigureOptions(IHostingEnvironment environment)
 		{
 			Environment = environment;
 		}

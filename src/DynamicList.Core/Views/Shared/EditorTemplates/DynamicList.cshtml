@@ -1,4 +1,5 @@
-﻿@model System.Collections.IList
+﻿@using Zoka.AspNetCore.Components.DynamicList
+@model System.Collections.IList
 @addTagHelper *, Zoka.AspNetCore.Components.DynamicList
 
 
@@ -22,7 +23,7 @@
 	}
 	else
 	{
-		item_row_partial = "_DynamicListDefaultRowPartial";
+		item_row_partial = DynamicListGlobalSettings.DefaultListItemTemplatePartial;
 	}
 
 	if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DynamicListAddItemTemplatePartial") &&
@@ -32,7 +33,7 @@
 	}
 	else
 	{
-		add_item_partial = "_DynamicListDefaultAddRowPartial";
+		add_item_partial = DynamicListGlobalSettings.DefaultAddItemTemplatePartial;
 	}
 
 	var html_id = "DynamicList_" + Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(""));
