@@ -5,6 +5,16 @@
     <AssemblyName>Zoka.AspNetCore.Components.DynamicList</AssemblyName>
     <RootNamespace>Zoka.AspNetCore.Components.DynamicList</RootNamespace>
 	  <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Authors>Michal Linhart</Authors>
+	  <Company>Zoka</Company>
+	  <Description>Asp.NET Core MVC component, which, when rendered on the client, allows user to edit list of any type of items (List&lt;T&gt;) - add, edit, delete - and all of this only by rendering the property using Html.EditorFor or Html.EditorForModel in Razor view.</Description>
+	  <Copyright>(c) 2019 Michal Linhart as Zoka</Copyright>
+	  <PackageProjectUrl>https://github.com/zoka-cz/DynamicList</PackageProjectUrl>
+	  <RepositoryUrl>git@github.com:zoka-cz/DynamicList.git</RepositoryUrl>
+	  <RepositoryType>Git/Github</RepositoryType>
+	  <PackageReleaseNotes></PackageReleaseNotes>
+	  <PackageTags>AspNet.Core, MVC, Dynamic List, component, List editor</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
