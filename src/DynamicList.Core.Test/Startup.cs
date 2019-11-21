@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Zoka.AspNetCore.Components.DynamicList;
 
 namespace DynamicList.Core.Test
 {
@@ -42,10 +43,9 @@ namespace DynamicList.Core.Test
 
 			services
 				.AddMvc()
-				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-				.AddMvcOptions(o => o.ModelMetadataDetailsProviders.Add(new Zoka.AspNetCore.Components.DynamicList.DynamicListAttribute()));
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			services.ConfigureOptions(typeof(Zoka.AspNetCore.Components.DynamicList.DynamicListScriptsFromResourceConfigureOptions));
+			services.UseDynamicListComponent();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

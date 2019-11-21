@@ -12,6 +12,7 @@ namespace DynamicList.Core.Test.Controllers
 	{
 		private readonly Models.CompanyHolder				m_CompanyHolder;
 
+		// injected CompanyHolder
 		public HomeController(Models.CompanyHolder _company_holder)
 		{
 			m_CompanyHolder = _company_holder;

@@ -1,4 +1,16 @@
-﻿<div class="DynamicList-AddItemButtonWrapper">
+﻿@*
+	Default PartialView used to render the "Add button" into the DynamicList component.
+	You may use this code to write your own Partial which renders the same button.
+	Feel free to change it in any way, but be sure to include button with class "DynamicList-AddItemButton"
+*@
+
+<div class="DynamicList-AddItemButtonWrapper">
+	@* 
+		IMPORTANT: 
+			to keep functionality, be sure your implementation contains some kind of button with 
+			html class "DynamicList-AddItemButton". HTML element with this class name is searched 
+			by DynamicList client script to bind it to click event.
+	*@
 	<button type="button" class="DynamicList-AddItemButton">
 		<span>+</span>
 	</button>

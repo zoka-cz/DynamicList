@@ -1,21 +1,24 @@
 ﻿@using Zoka.AspNetCore.Components.DynamicList
+@* To work easily with DynamicList we use non-generic version of List -> IList *@
 @model System.Collections.IList
-@addTagHelper *, Zoka.AspNetCore.Components.DynamicList
+@* To enable adding scripts in the EditorTemplate we add tag helper TemplateScriptsTagHelper *@
+@addTagHelper Zoka.AspNetCore.Components.DynamicList.TagHelper.TemplateScriptsTagHelper, Zoka.AspNetCore.Components.DynamicList
 
-
+@* We need ViewEngine for getting know whether the PartialView exists *@
 @inject Microsoft.AspNetCore.Mvc.ViewEngines.ICompositeViewEngine ViewEngine
 
 @{
+	// check the passed model. It must be List<T>
 	var model_type = ViewData.ModelMetadata.ModelType;
 	if (model_type.Name != "List`1" && model_type.Namespace != "System.Collections.Generic")
 	{
 		throw new NotSupportedException("Model must be of List<T> type");
 	}
+	// extract the type of model
 	var item_type = model_type.GenericTypeArguments[0];
 
-	int i = 0;
+	// resolve the partial views to display single item, and add button
 	string item_row_partial, add_item_partial;
-
 	if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DynamicListItemTemplatePartial") &&
 		ViewEngine.FindView(ViewContext, (string)ViewData.ModelMetadata.AdditionalValues["DynamicListItemTemplatePartial"], false).Success)
 	{
@@ -36,14 +39,21 @@
 		add_item_partial = DynamicListGlobalSettings.DefaultAddItemTemplatePartial;
 	}
 
+	// prepare id for div wrapper of whole DynamicList
 	var html_id = "DynamicList_" + Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(""));
+
+	// initialize the indexer
+	int i = 0;
 }
 
 <div class="DynamicList" id="@html_id">
-
 	<div class="DynamicList-Rows">
 		@foreach (var item in Model)
 		{
+			@*	
+				For every item, call the PartialView, and pass ViewDataDictionary, which contains the field prefix
+				and also the item index.
+			*@
 			@Html.Partial(
 				item_row_partial,
 				item,
@@ -54,11 +64,20 @@
 			)
 		}
 	</div>
+	@*
+		Draw the add button from partial
+	*@
 	@Html.Partial(add_item_partial)
-
 </div>
 
 <template-scripts key-name="DynamicListScripts">
+	@* 
+		Initialize the DynamicList component on client side.
+		The parameters are:
+			- AssemblyQualifiedName of the item model type
+			- Model prefix
+			- options, which changes behaviour of the component
+	*@
 	<script>
 		$("#@html_id").DynamicList("@item_type.AssemblyQualifiedName", "@ViewData.TemplateInfo.GetFullHtmlFieldName("")", {});
 	</script>

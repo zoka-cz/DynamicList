@@ -1,15 +1,34 @@
-﻿@model object
+﻿@*
+	Default PartialView used to render the DynamicList single item.
+	You may use this code to write your own Partial which renders the item editor.
+	Feel free to change it in any way, but be sure to keep the following:
+		- wrap your item in element with html class "DynamicList-Row"
+		- draw the element with html class "DynamicList-RemoveItemButton" - client script of DynamicList
+			searches for elements with this class to bind it to the click event
+		- Use this line to draw the editor @Html.EditorForModel(null, (string)$"{ViewData["HtmlFieldPrefix"]}[{ViewData["ItemIndex"]}]")
+			- first parameter indicates the template to be used to draw the model
+			- second parameter changes the name prefix for the properties of object
+			- you may use other method to draw the editor, but follow the naming rules as the EditorForModel does
+		- draw hidden input with name "{HtmlFieldPrefix}.Index" and value "ItemIndex"
+			- this ensures, that the binder works correctly no matter of the indices sequence or order
+*@
 
+@model object
+
+@* IMPORTANT: wrap your editor in element with html class "DynamicList-Row" *@
 <div class="DynamicList-Row">
 	<div class="DynamicList-RemoveItemButtonWrapper">
+		@* IMPORTANT: draw somewhere the button element with html class "DynamicList-RemoveItemButton" *@
 		<button type="button" class="DynamicList-RemoveItemButton">
 			<span>X</span>
 		</button>
 	</div>
 
 	<div class="DynamicList-ItemEditorWrapper">
+		@* IMPORTANT: following line or similar solution (see top of this file for remarks) must be in your code to draw your editor *@
 		@Html.EditorForModel(null, (string)$"{ViewData["HtmlFieldPrefix"]}[{ViewData["ItemIndex"]}]")
 	</div>
-
+	
+	@* IMPORTANT: draw hidden value with item index to ensure default model binder works correctly for incomplete sequences of indices *@
 	<input type="hidden" name="@(ViewData["HtmlFieldPrefix"] + (string.IsNullOrEmpty((string)ViewData["HtmlFieldPrefix"]) ? "" : ".") + "Index")" value="@ViewData["ItemIndex"]" />
 </div>

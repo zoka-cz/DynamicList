@@ -9,7 +9,10 @@ using Microsoft.Extensions.Options;
 
 namespace Zoka.AspNetCore.Components.DynamicList
 {
-	/// <summary></summary>
+	/// <summary>
+	///		Configure options class which allows the static files to be served also from embedded resources.
+	/// </summary>
+	/// <remarks>The code has been taken from: https://stackoverflow.com/a/53024912/1038496. </remarks>
 	public class DynamicListScriptsFromResourceConfigureOptions : IPostConfigureOptions<StaticFileOptions>
 	{
 		/// <summary></summary>
